@@ -35,6 +35,16 @@
       fsType = "zfs";
     };
 
+  fileSystems."/sdcard" =
+    { device = "/dev/mmcblk0p2";
+      fsType = "ext4";
+    };
+
+  fileSystems."/boot" =
+    { device = "/sdcard/boot";
+      options = [ "bind" ];
+    };
+
   swapDevices = [ ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
