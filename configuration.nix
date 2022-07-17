@@ -107,5 +107,17 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "22.11"; # Did you read the comment?
 
+  # docker
+  virtualisation.docker.enable = true;
+
+  # rancher access
+  users.users.rancher = {
+    isNormalUser = true;
+    home = "/home/rancher";
+    description = "Service user for rancher";
+    extraGroups = [ "docker" ];
+    openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM+ResginDO3aOjCVc+5JIbvnxaw58LEwRhTSsv6JHJ4 edwin@dhyana" ];
+  };
+
 }
 
