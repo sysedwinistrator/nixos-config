@@ -23,16 +23,19 @@
   fileSystems."/" =
     { device = "znix/data/root";
       fsType = "zfs";
+      options = [ "zfsutil" ];
     };
 
   fileSystems."/home" =
     { device = "znix/data/home";
       fsType = "zfs";
+      options = [ "zfsutil" ];
     };
 
   fileSystems."/nix" =
     { device = "znix/nixos/nix";
       fsType = "zfs";
+      options = [ "zfsutil" ];
     };
 
   fileSystems."/sdcard" =
