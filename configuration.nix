@@ -122,7 +122,10 @@
   system.stateVersion = "22.11"; # Did you read the comment?
 
   # docker
-  virtualisation.docker.enable = true;
+  virtualisation.docker = {
+    enable = true;
+    storageDriver = "zfs";
+  };
 
   # rancher access
   users.users.rancher = {
