@@ -139,5 +139,15 @@
     ];
   };
 
+  services.lighttpd = {
+    enable = true;
+    cgit = {
+      enable = true;
+      configText =
+        ''
+          scan-path=/srv/git
+        '';
+    };
+  };
 }
 
