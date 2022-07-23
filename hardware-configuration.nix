@@ -32,6 +32,12 @@
       options = [ "zfsutil" ];
     };
 
+  fileSystems."/srv/git" =
+    { device = "znix/data/git";
+      fsType = "zfs";
+      options = [ "zfsutil" ];
+    };
+
   fileSystems."/nix" =
     { device = "znix/nixos/nix";
       fsType = "zfs";
