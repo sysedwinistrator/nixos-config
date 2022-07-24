@@ -17,7 +17,7 @@
   boot.extraModulePackages = [ ];
   boot.zfs.enableUnstable = true;
   boot.kernelParams = [
-    "console=ttyS0,1500000"
+    "console=ttyS2,115200"
     "nohibernate"
   ];
   hardware.enableRedistributableFirmware = true;
