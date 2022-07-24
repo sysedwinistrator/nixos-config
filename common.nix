@@ -7,16 +7,11 @@
 {
   imports =
     [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
+      ./host
     ];
 
-  # Use the extlinux boot loader. (NixOS wants to enable GRUB by default)
-  boot.loader.grub.enable = false;
-  # Enables the generation of /boot/extlinux/extlinux.conf
-  boot.loader.generic-extlinux-compatible.enable = true;
-
-  networking.hostName = "plato"; # Define your hostname.
-  networking.hostId = "8556b001";
+  networking.hostName = config.host.name;
+  networking.hostId = config.host.hostId;
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   # networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
@@ -119,36 +114,7 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "22.11"; # Did you read the comment?
-
-  # docker
-  virtualisation.docker = {
-    enable = true;
-    storageDriver = "zfs";
-  };
-
-  # rancher access
-  users.users.rancher = {
-    isNormalUser = true;
-    home = "/home/rancher";
-    description = "Service user for rancher";
-    extraGroups = [ "docker" ];
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM+ResginDO3aOjCVc+5JIbvnxaw58LEwRhTSsv6JHJ4 edwin@dhyana"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII32nGkOM9WitJaDsiboxbQAVjpemC5uUotOFlFqiYhY rancher"
-    ];
-  };
-
-  services.lighttpd = {
-    enable = true;
-    cgit = {
-      enable = true;
-      configText =
-        ''
-          scan-path=/srv/git
-        '';
-    };
-  };
+  system.stateVersion = "22.05"; # Did you read the comment?
 
   users.users.git = {
     isSystemUser = true;
