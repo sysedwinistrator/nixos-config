@@ -37,6 +37,9 @@
       options = [ "zfsutil" ];
     };
 
+  fileSystems."/boot" =
+    { label = "aristotle_esp"; };
+
   swapDevices = [ ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
