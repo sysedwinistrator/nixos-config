@@ -52,7 +52,7 @@
     };
 
   fileSystems."/boot" =
-    { label = "aristotle_esp"; };
+    { device = "/dev/disk/by-partlabel/aristotle_esp"; };
 
   swapDevices = [ ];
 
