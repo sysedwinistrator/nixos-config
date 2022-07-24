@@ -4,6 +4,8 @@ with lib;
 
 {
   config = lib.mkIf config.host.rancher.enable {
+    host.docker.enable = true;
+
     # SSH access
     users.users.rancher = {
       isNormalUser = true;
