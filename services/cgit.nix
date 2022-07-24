@@ -16,11 +16,11 @@ with lib;
     };
   };
   options = {
-    host.cgit.enable = {
+    host.cgit.enable = mkOption {
       type = types.bool;
       default = false;
     };
-    host.cgit.scanpath = {
+    host.cgit.scanpath = mkOption {
       type = types.path;
     };
   };
