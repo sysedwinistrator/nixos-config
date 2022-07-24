@@ -1,5 +1,7 @@
 { config, lib, pkgs, ...}:
 
+with lib;
+
 {
   config = lib.mkIf config.host.cgit.enable {
     services.lighttpd = {
