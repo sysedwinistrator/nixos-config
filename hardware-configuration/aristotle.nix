@@ -8,6 +8,9 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
+  boot.loader.grub.enable = false;
+  boot.loader.systemd-boot.enable = true;
+
   boot.initrd.availableKernelModules = [ "ahci" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ ];
