@@ -1,5 +1,7 @@
 { config, lib, pkgs, ...}:
 
+with lib;
+
 {
   config = lib.mkIf config.host.rancher.enable {
     # SSH access
@@ -14,6 +16,7 @@
   options = {
     host.rancher.enable = mkOption {
       type = types.bool;
+      default = false;
     };
     host.rancher.roles = mkOption {
       type = types.listOf types.enum ["controlplane" "worker" "etcd"];

@@ -1,5 +1,7 @@
 { config, lib, pkgs, ...}:
 
+with lib;
+
 {
   config = lib.mkIf config.host.docker.enable {
     # docker
@@ -11,6 +13,7 @@
   options = {
     host.docker.enable = mkOption {
       type = types.bool;
+      default = false;
     };
   };
 }

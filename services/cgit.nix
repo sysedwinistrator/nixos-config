@@ -16,6 +16,7 @@
   options = {
     host.cgit.enable = {
       type = types.bool;
+      default = false;
     };
     host.cgit.scanpath = {
       type = types.path;
