@@ -3,7 +3,7 @@
 {
   imports = [
     ../common.nix
-    ../hardware-configuration/plato.nix
+    ../hardware-configuration/aristotle.nix
   ];
 
   config = {
