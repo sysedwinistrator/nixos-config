@@ -11,7 +11,18 @@
   boot.loader.grub.enable = false;
   boot.loader.systemd-boot.enable = true;
 
-  boot.initrd.availableKernelModules = [ "ahci" ];
+  boot.initrd.availableKernelModules = [
+    "ahci"
+    "pcie_rockchip_host"
+    "phy_rockchip_pcie"
+    "rockchip_dfi"
+    "rockchip_thermal"
+    "rtc_rk808"
+    "rockchip_saradc"
+    "uas"
+    "fusb302"
+    "zfs"
+  ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
