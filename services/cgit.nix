@@ -1,7 +1,7 @@
 { config, lib, pkgs, ...}:
 
 {
-  config = libMkif config.host.cgit.enable {
+  config = lib.mkIf config.host.cgit.enable {
     services.lighttpd = {
       enable = true;
       cgit = {
