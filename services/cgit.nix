@@ -32,7 +32,7 @@ with lib;
       default = false;
     };
     host.cgit.scanpath = mkOption {
-      type = types.path;
+      type = types.str;
     };
   };
 }

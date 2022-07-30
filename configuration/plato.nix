@@ -21,7 +21,7 @@
     };
     host.cgit = {
       enable = true;
-      scanpath = /srv/git;
+      scanpath = "/srv/git";
     };
   };
 }
