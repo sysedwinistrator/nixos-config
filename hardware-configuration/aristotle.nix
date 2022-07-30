@@ -26,14 +26,12 @@
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
-  boot.zfs.enableUnstable = true;
   boot.kernelParams = [
     "console=ttyS2,115200"
     "nohibernate"
     "libata.force=noncq"
     "libahci.ignore_sss=1"
   ];
-  hardware.enableRedistributableFirmware = true;
 
   fileSystems."/" =
     { device = "zroot/data/root";

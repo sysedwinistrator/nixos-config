@@ -17,12 +17,10 @@
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
-  boot.zfs.enableUnstable = true;
   boot.kernelParams = [
     "console=ttyAML0,115200n8"
     "nohibernate"
   ];
-  hardware.enableRedistributableFirmware = true;
 
 
   fileSystems."/" =
