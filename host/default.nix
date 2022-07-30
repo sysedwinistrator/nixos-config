@@ -6,6 +6,11 @@ with lib;
   config = {
     hardware.enableRedistributableFirmware = true;
 
+    boot.loader = lib.mkIf config.host.uefi {
+      grub.enable = false;
+      systemd-boot.enable = true;
+    };
+
     services.zfs = lib.mkIf config.host.zfs {
       autoScrub.enable = true;
       autoSnapshot.enable = true;
@@ -31,6 +36,10 @@ with lib;
     };
     ssd = mkOption {
       type = types.bool;
+    };
+    uefi = mkOption {
+      type = types.bool;
+      default = true;
     };
   };
 }
