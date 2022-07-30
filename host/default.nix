@@ -2,10 +2,14 @@
 
 with lib;
 
-let
-  cfg = config.host;
-in
 {
+  config = {
+    services.zfs = lib.mkIf config.host.zfs {
+      autoScrub.enable = true;
+      autoSnapshot.enable = true;
+      trim.enable = lib.mkIf config.host.ssd true;
+    };
+  };
   options.host = {
     name = mkOption {
       type = types.str;
@@ -20,6 +24,9 @@ in
       '';
     };
     zfs = mkOption {
+      type = types.bool;
+    };
+    ssd = mkOption {
       type = types.bool;
     };
   };

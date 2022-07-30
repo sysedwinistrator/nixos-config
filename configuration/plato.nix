@@ -9,6 +9,8 @@
   config = {
     host.name = "plato";
     host.hostId = "8556b001";
+    host.zfs = true;
+    host.ssd = true;
     host.rancher = {
       enable = true;
       roles = ["etcd" "worker"];

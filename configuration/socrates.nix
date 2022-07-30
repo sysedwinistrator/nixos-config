@@ -9,6 +9,8 @@
   config = {
     host.name = "socrates";
     host.hostId = "7ee536a0";
+    host.zfs = true;
+    host.ssd = true;
     host.rancher = {
       enable = true;
       roles = ["controlplane" "worker"];
