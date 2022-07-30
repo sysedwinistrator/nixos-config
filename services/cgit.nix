@@ -10,7 +10,7 @@ with lib;
         enable = true;
         configText =
           ''
-            scan-path=${config.host.cgit.path}
+            scan-path=${config.host.cgit.scanpath}
           '';
       };
     };
