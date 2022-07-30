@@ -117,16 +117,5 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "22.05"; # Did you read the comment?
 
-  users.users.git = {
-    isSystemUser = true;
-    description = "git user";
-    home = "/srv/git";
-    group = "git";
-    shell = "${pkgs.git}/bin/git-shell";
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOCVqtVszoP/AmcF5ckUCEx8zF/rHsW+LfdNEDSM/91Z argocd"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM+ResginDO3aOjCVc+5JIbvnxaw58LEwRhTSsv6JHJ4 edwin@dhyana"
-    ];
-  };
 }
 
