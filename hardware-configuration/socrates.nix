@@ -36,15 +36,14 @@
       options = [ "zfsutil" ];
     };
 
-  fileSystems."/sdcard" =
-    { device = "/dev/mmcblk0p2";
-      fsType = "ext4";
+  fileSystems."/var/lib/docker" =
+    { device = "znix/data/docker";
+      fsType = "zfs";
+      options = [ "zfsutil" ];
     };
 
   fileSystems."/boot" =
-    { device = "/sdcard/boot";
-      options = [ "bind" ];
-    };
+    { device = "/dev/disk/by-partlabel/socrates_esp"; };
 
   swapDevices = [ ];
 
