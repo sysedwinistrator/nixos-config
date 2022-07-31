@@ -26,8 +26,6 @@
   boot.kernelParams = [
     "console=ttyS2,115200"
     "nohibernate"
-    "libata.force=noncq"
-    "libahci.ignore_sss=1"
   ];
 
   fileSystems."/" =
