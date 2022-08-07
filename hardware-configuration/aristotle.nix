@@ -65,7 +65,7 @@
   
   networking.bridges.lan-bridge = {
     interfaces = [
-      "eth0.1"
+      "lan"
     ];
   };
 
