@@ -42,6 +42,12 @@
       options = [ "zfsutil" ];
     };
 
+  fileSystems."/var/lib/powerdns" =
+    { device = "znix/data/powerdns";
+      fsType =  "zfs";
+      options = [ "zfsutil" ];
+    };
+
   fileSystems."/boot" =
     { device = "/dev/disk/by-partlabel/socrates_esp"; };
 
