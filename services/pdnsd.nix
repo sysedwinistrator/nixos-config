@@ -6,7 +6,7 @@ with lib;
   config = lib.mkIf config.host.pdnsd.enable {
     services.pdnsd = {
       enable = true;
-      extraConfig = ''
+      globalConfig = ''
         launch=gsqlite3
         gsqlite3-database=/var/lib/powerdns/pdns.sqlite3
         webserver=true
