@@ -20,6 +20,7 @@ in
   config = lib.mkIf config.host.pdns.enable {
     users.users.${pdnsUser} = {
       group = pdnsGroup;
+      isSystemUser = true;
     };
     users.groups.${pdnsGroup} = {};
 
