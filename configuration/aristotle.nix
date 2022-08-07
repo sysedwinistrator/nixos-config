@@ -19,6 +19,6 @@
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII32nGkOM9WitJaDsiboxbQAVjpemC5uUotOFlFqiYhY rancher"
       ];
     };
-    host.lxd = true;
+    host.lxd.enable = true;
   };
 }
