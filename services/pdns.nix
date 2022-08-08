@@ -11,6 +11,7 @@ let
       webserver=true
       webserver-address=0.0.0.0
       webserver-port=8053
+      webserver-allow-from=192.168.0.0/16
     '';
   pdnsUser = "powerdns";
   pdnsGroup = "powerdns";
