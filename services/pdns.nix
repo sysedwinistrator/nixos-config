@@ -30,7 +30,7 @@ in
       after = [ "network.target" ];
       serviceConfig = 
         {
-          ExecStart = "${pdns}/bin/pdns_server --config-dir=${pdns_config} --guardian=no --daemon=no --disable-syslog --log-timestamp=no --write-pid=no";
+          ExecStart = "${pdns}/bin/pdns_server --config-dir=${pdns_config}/etc --guardian=no --daemon=no --disable-syslog --log-timestamp=no --write-pid=no";
           SyslogIdentifier = "pdns_server";
           User = "${pdnsUser}";
           Group = "${pdnsGroup}";
