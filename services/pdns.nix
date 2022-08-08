@@ -4,7 +4,7 @@ with lib;
 
 let
   pdns = pkgs.pdns;
-  pdns_config = pkgs.writeText "pdns.conf"
+  pdns_config = pkgs.writeTextDir "etc/pdns.conf"
     ''
       launch=gsqlite3;
       gsqlite3-database=/var/lib/powerdns/pdns.sqlite3;
@@ -30,7 +30,7 @@ in
       after = [ "network.target" ];
       serviceConfig = 
         {
-          ExecStart = "${pdns}/bin/pdns_server -c ${pdns_config} --guardian=no --daemon=no --disable-syslog --log-timestamp=no --write-pid=no";
+          ExecStart = "${pdns}/bin/pdns_server --config-dir=${pdns_config} --guardian=no --daemon=no --disable-syslog --log-timestamp=no --write-pid=no";
           SyslogIdentifier = "pdns_server";
           User = "${pdnsUser}";
           Group = "${pdnsGroup}";
