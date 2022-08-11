@@ -4,7 +4,7 @@ with lib;
 
 let
   pdns = pkgs.pdns;
-  pdns_config = pkgs.writeTextDir "etc/pdns.conf"
+  pdnsConfig = pkgs.writeTextDir "etc/pdns.conf"
     ''
       launch=gsqlite3
       gsqlite3-database=/var/lib/powerdns/pdns.sqlite3
@@ -12,7 +12,9 @@ let
       webserver-address=0.0.0.0
       webserver-port=8053
       webserver-allow-from=192.168.0.0/16
+      tcp-control-secret=${pdnsControlSecret}
     '';
+  pdnsControlSecret = builtins.readFile /etc/nixos/secrets/pdns-control;
   pdnsUser = "powerdns";
   pdnsGroup = "powerdns";
 in
@@ -31,7 +33,7 @@ in
       after = [ "network.target" ];
       serviceConfig = 
         {
-          ExecStart = "${pdns}/bin/pdns_server --config-dir=${pdns_config}/etc --guardian=no --daemon=no --disable-syslog --log-timestamp=no --write-pid=no";
+          ExecStart = "${pdns}/bin/pdns_server --config-dir=${pdnsConfig}/etc --guardian=no --daemon=no --disable-syslog --log-timestamp=no --write-pid=no";
           SyslogIdentifier = "pdns_server";
           User = "${pdnsUser}";
           Group = "${pdnsGroup}";
