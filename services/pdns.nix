@@ -15,6 +15,8 @@ let
       dnsupdate=yes
       tcp-control-address=0.0.0.0
       tcp-control-secret=${pdnsControlSecret}
+      api=yes
+      api-key=Dhhu8Y5TS6p80QvdM4OJHB01WnQpSK7pX40T62JtivbThb2RxKt2SkxFttecFzhK
     '';
   pdnsControlSecret = builtins.readFile /etc/nixos/secrets/pdns-control;
   pdnsUser = "powerdns";
