@@ -12,6 +12,7 @@ let
       webserver-address=0.0.0.0
       webserver-port=8053
       webserver-allow-from=127.0.0.0/8, 10.0.0.0/8, 192.168.0.0/16, 172.16.0.0/12, ::1/128, fe80::/10
+      dnsupdate=yes
       allow-dnsupdate-from=127.0.0.0/8, 10.0.0.0/8, 192.168.0.0/16, 172.16.0.0/12, ::1/128, fe80::/10
       tcp-control-address=0.0.0.0
       tcp-control-secret=${pdnsControlSecret}
