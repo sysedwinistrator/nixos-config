@@ -25,6 +25,9 @@ in
 
 {
   config = lib.mkIf config.host.pdns.enable {
+    environment.systemPackages = with pkgs; [
+      pdns
+    ];
     users.users.${pdnsUser} = {
       group = pdnsGroup;
       isSystemUser = true;
