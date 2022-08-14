@@ -23,5 +23,6 @@
       enable = true;
       scanpath = "/srv/git";
     };
+    host.pdns.enable = true;
   };
 }
