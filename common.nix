@@ -75,7 +75,7 @@ in
       builtins.map (x: "http://${x}:5000") ips
     );
     trusted-public-keys = [
-      readFile /etc/nixos/cache-pub-key.pem
+      builtins.readFile /etc/nixos/cache-pub-key.pem
     ];
   };
 
