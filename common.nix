@@ -4,6 +4,25 @@
 
 { config, pkgs, ... }:
 
+let
+  all_hosts = [
+    {
+      name = "aristotle";
+      ip = "192.168.3.6";
+    }
+    {
+      name = "socrates";
+      ip = "192.168.3.7";
+    }
+    {
+      name = "plato";
+      ip = "192.168.3.8";
+    }
+  ];
+    
+  current_host = builtins.filter (x: x.name == config.host.name) all_hosts;
+  other_hosts = builtins.filter (x: x.name != config.host.name) all_hosts;
+in
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -42,6 +61,15 @@
   users.users.root.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM+ResginDO3aOjCVc+5JIbvnxaw58LEwRhTSsv6JHJ4 edwin@dhyana"
   ];
+
+  # share cache over HTTP
+  services.nix-serve.enable = true;
+  nix.settings.substituters = 
+    (let
+      ips = builtins.catAttrs ip other_hosts;
+    in
+      builtins.map (x: "http://${x}:5000") ips
+    );
 
   networking.firewall.enable = false;
 
