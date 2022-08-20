@@ -63,13 +63,21 @@ in
   ];
 
   # share cache over HTTP
-  services.nix-serve.enable = true;
-  nix.settings.substituters = 
+  services.nix-serve = {
+    enable = true;
+    secretKeyFile = "/etc/nixos/secrets/cache-priv-key.pem";
+  };
+  nix.settings = {
+    substituters = 
     (let
       ips = builtins.catAttrs "ip" other_hosts;
     in
       builtins.map (x: "http://${x}:5000") ips
     );
+    trusted-public-keys = [
+      readFile /etc/nixos/cache-pub-key.pem
+    ];
+  };
 
   networking.firewall.enable = false;
 
