@@ -66,7 +66,7 @@ in
   services.nix-serve.enable = true;
   nix.settings.substituters = 
     (let
-      ips = builtins.catAttrs ip other_hosts;
+      ips = builtins.catAttrs "ip" other_hosts;
     in
       builtins.map (x: "http://${x}:5000") ips
     );
