@@ -38,6 +38,10 @@ in
       description = "PowerDNS Authoritative Server";
       wantedBy = [ "multi-user.target" ];
       after = [ "network.target" ];
+      unitConfig = 
+        {
+          StartLimitInterval = "0";
+        };
       serviceConfig = 
         {
           ExecStart = "${pdns}/bin/pdns_server --config-dir=${pdnsConfig}/etc --guardian=no --daemon=no --disable-syslog --log-timestamp=no --write-pid=no";
@@ -47,7 +51,6 @@ in
           Type = "notify";
           Restart = "on-failure";
           RestartSec = "1";
-          StartLimitInterval = "0";
           RuntimeDirectory = "pdns";
           # Sandboxing
           CapabilityBoundingSet = "CAP_NET_BIND_SERVICE CAP_CHOWN";
