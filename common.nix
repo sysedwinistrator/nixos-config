@@ -77,7 +77,7 @@ in
     (let
       ips = builtins.catAttrs "ip" other_hosts;
     in
-      builtins.map (x: "http://${x}:5000") ips
+      builtins.map (x: "http://${x}:5000/") ips
     );
     trusted-public-keys = [
       (builtins.readFile /etc/nixos/cache-pub-key.pem)
