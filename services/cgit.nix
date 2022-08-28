@@ -26,6 +26,7 @@ with lib;
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIONjh1AZbJtlKuLdKZw7Gt3rBtcp0JnVPpVM0voW/Sy0 edwin@MacBook-Pro-von-Edwin.local"
       ];
     };
+    users.groups.git = {};
   };
   options = {
     host.cgit.enable = mkOption {
