@@ -23,6 +23,7 @@ with lib;
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOCVqtVszoP/AmcF5ckUCEx8zF/rHsW+LfdNEDSM/91Z argocd"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM+ResginDO3aOjCVc+5JIbvnxaw58LEwRhTSsv6JHJ4 edwin@dhyana"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIONjh1AZbJtlKuLdKZw7Gt3rBtcp0JnVPpVM0voW/Sy0 edwin@MacBook-Pro-von-Edwin.local"
       ];
     };
   };
