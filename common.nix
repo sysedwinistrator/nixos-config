@@ -30,6 +30,11 @@ in
       ./services
     ];
 
+  # Enable SysRQ key
+  boot.kernel.sysctl = {
+    "kernel.sysrq" = 1;
+  };
+
   networking.hostName = config.host.name;
   networking.hostId = config.host.hostId;
 
