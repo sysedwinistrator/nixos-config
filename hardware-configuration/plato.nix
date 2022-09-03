@@ -42,18 +42,6 @@
       options = [ "zfsutil" ];
     };
 
-  fileSystems."/var/lib/docker" =
-    { device = "znix/data/docker";
-      fsType = "zfs";
-      options = [ "zfsutil" ];
-    };
-
-  fileSystems."/var/lib/etcd" =
-    { device = "znix/data/etcd";
-      fsType =  "zfs";
-      options = [ "zfsutil" ];
-    };
-
   fileSystems."/boot" =
     { device = "/dev/disk/by-partlabel/plato_esp"; };
 

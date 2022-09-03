@@ -36,12 +36,6 @@
       options = [ "zfsutil" ];
     };
 
-  fileSystems."/var/lib/docker" =
-    { device = "znix/data/docker";
-      fsType = "zfs";
-      options = [ "zfsutil" ];
-    };
-
   fileSystems."/var/lib/powerdns" =
     { device = "znix/data/powerdns";
       fsType =  "zfs";
