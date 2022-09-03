@@ -70,4 +70,6 @@
   };
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
+
+  boot.zfs.requestEncryptionCredentials = false;
 }
