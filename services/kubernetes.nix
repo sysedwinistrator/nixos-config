@@ -5,7 +5,7 @@ let
   api = "https://${master.ip}:${config.services.kubernetes.apiserver.securePort}";
 in
 {
-  config = lib.mkIf config.services.kubernetes.roles != null {
+  config = lib.mkIf config.services.kubernetes.roles ? null != null {
     fileSystems = lib.mkIf config.host.zfs {
       "/var/lib/containerd" = {
         device = "${config.host.zfsDataSet}/containerd";
