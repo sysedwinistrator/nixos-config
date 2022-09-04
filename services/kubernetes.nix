@@ -1,4 +1,4 @@
-{ ... }:
+{ config, lib, pkgs, ...}:
 
 let
   inherit all_hosts;
