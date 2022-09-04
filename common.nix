@@ -4,7 +4,7 @@
 
 { config, pkgs, ... }:
 
-let
+{
   all_hosts = [
     {
       name = "aristotle";
@@ -25,8 +25,7 @@ let
     
   current_host = builtins.filter (x: x.name == config.host.name) all_hosts;
   other_hosts = builtins.filter (x: x.name != config.host.name) all_hosts;
-in
-{
+
   imports =
     [ # Include the results of the hardware scan.
       ./host
