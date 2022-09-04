@@ -1,6 +1,8 @@
 { ... }:
 
 let
+  inherit all_hosts;
+  inherit current_all;
   master = builtins.filter (x: builtins.elem "master" x.kubernetes_roles) all_hosts;
   api = "https://${master.ip}:${services.kubernetes.apiserver.securePort}";
 in
