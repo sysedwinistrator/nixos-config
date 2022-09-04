@@ -10,6 +10,7 @@
     host.name = "socrates";
     host.hostId = "7ee536a0";
     host.zfs = true;
+    host.zfsDataSet = "znix/data";
     host.ssd = true;
     host.pdns.enable = true;
   };

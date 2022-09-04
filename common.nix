@@ -9,14 +9,17 @@ let
     {
       name = "aristotle";
       ip = "192.168.3.6";
+      kubernetes_roles = ["node"];
     }
     {
       name = "socrates";
       ip = "192.168.3.7";
+      kubernetes_roles = ["master" "node"];
     }
     {
       name = "plato";
       ip = "192.168.3.8";
+      kubernetes_roles = ["node"];
     }
   ];
     
