@@ -31,7 +31,7 @@ in
       apiserverAddress = api;
 
       # master configuration
-      apiserver = lib.mkIf config.services.kubernetes.roles == "master" {
+      apiserver = lib.mkIf (builtins.elem "master" config.services.kubernetes.roles) {
         advertiseAddress = master.ip;
       };
 
