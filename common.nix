@@ -23,8 +23,8 @@
     }
   ];
     
-  current_host = builtins.filter (x: x.name == config.host.name) all_hosts;
-  other_hosts = builtins.filter (x: x.name != config.host.name) all_hosts;
+  current_host = builtins.filter (x: x.name == config.host.name) config.all_hosts;
+  other_hosts = builtins.filter (x: x.name != config.host.name) config.all_hosts;
 
   imports =
     [ # Include the results of the hardware scan.
@@ -77,7 +77,7 @@
   nix.settings = {
     substituters = 
     (let
-      ips = builtins.catAttrs "ip" other_hosts;
+      ips = builtins.catAttrs "ip" config.other_hosts;
     in
       builtins.map (x: "http://${x}:5000/") ips
     );

@@ -1,9 +1,7 @@
 { config, lib, pkgs, ...}:
 
 let
-  inherit all_hosts;
-  inherit current_all;
-  master = builtins.filter (x: builtins.elem "master" x.kubernetes_roles) all_hosts;
+  master = builtins.filter (x: builtins.elem "master" x.kubernetes_roles) config.all_hosts;
   api = "https://${master.ip}:${config.services.kubernetes.apiserver.securePort}";
 in
 {
@@ -28,7 +26,7 @@ in
       easyCerts = true;
       addons.dns.enable = true;
 
-      roles = current_host.kubernetes_roles;
+      roles = config.current_host.kubernetes_roles;
       masterAddress = master.ip;
       apiserverAddress = api;
 
