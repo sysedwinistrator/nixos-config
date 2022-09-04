@@ -4,17 +4,17 @@ let
   inherit all_hosts;
   inherit current_all;
   master = builtins.filter (x: builtins.elem "master" x.kubernetes_roles) all_hosts;
-  api = "https://${master.ip}:${services.kubernetes.apiserver.securePort}";
+  api = "https://${master.ip}:${config.services.kubernetes.apiserver.securePort}";
 in
 {
-  config = lib.mkIf services.kubernetes.roles != null {
+  config = lib.mkIf config.services.kubernetes.roles != null {
     fileSystems = lib.mkIf config.host.zfs {
       "/var/lib/containerd" = {
         device = "${config.host.zfsDataSet}/containerd";
         fsType = "zfs";
         options = [ "zfsutils" ];
       };
-      "/var/lib/etcd" = lib.mkIf services.kubernetes.roles == "master" {
+      "/var/lib/etcd" = lib.mkIf config.services.kubernetes.roles == "master" {
         device = "${config.host.zfsDataSet}/etcd";
         fsType = "zfs";
         options = [ "zfsutils" ];
@@ -33,12 +33,12 @@ in
       apiserverAddress = api;
 
       # master configuration
-      apiserver = lib.mkIf services.kubernetes.roles == "master" {
+      apiserver = lib.mkIf config.services.kubernetes.roles == "master" {
         advertiseAddress = master.ip;
       };
 
       # node configuration
-      kubelet.kubeconfig.server = lib.mkIf services.kubernetes.roles == "node" api;
+      kubelet.kubeconfig.server = lib.mkIf config.services.kubernetes.roles == "node" api;
     };
   };
 }
