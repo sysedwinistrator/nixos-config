@@ -1,7 +1,7 @@
 { config, lib, pkgs, ...}:
 
 let
-  master = builtins.filter (x: builtins.elem "master" x.kubernetes_roles) config.lab.all_hosts;
+  master = builtins.elemAt (builtins.filter (x: builtins.elem "master" x.kubernetes_roles) config.lab.all_hosts) 0;
   api = "https://${master.ip}:${config.services.kubernetes.apiserver.securePort}";
 in
 {
