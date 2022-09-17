@@ -5,14 +5,14 @@ let
   api = "https://${master.ip}:${config.services.kubernetes.apiserver.securePort}";
 in
 {
-  config = lib.mkIf (config.services.kubernetes.roles != []) {
+  config = lib.mkIf (config.lab.current_host.kubernetes_roles != []) {
     fileSystems = lib.mkIf config.host.zfs {
       "/var/lib/containerd" = {
         device = "${config.host.zfsDataSet}/containerd";
         fsType = "zfs";
         options = [ "zfsutils" ];
       };
-      "/var/lib/etcd" = lib.mkIf config.services.kubernetes.roles == "master" {
+      "/var/lib/etcd" = lib.mkIf (builtins.elem "master" config.lab.current_host.kubernetes_roles) {
         device = "${config.host.zfsDataSet}/etcd";
         fsType = "zfs";
         options = [ "zfsutils" ];
@@ -31,12 +31,12 @@ in
       apiserverAddress = api;
 
       # master configuration
-      apiserver = lib.mkIf (builtins.elem "master" config.services.kubernetes.roles) {
+      apiserver = lib.mkIf (builtins.elem "master" config.lab.current_host.kubernetes_roles) {
         advertiseAddress = master.ip;
       };
 
       # node configuration
-      kubelet.kubeconfig.server = lib.mkIf config.services.kubernetes.roles == "node" api;
+      kubelet.kubeconfig.server = lib.mkIf (builtins.elem "node" config.lab.current_host.kubernetes_roles) api;
     };
   };
 }
