@@ -5,6 +5,12 @@
 { config, lib, pkgs, ... }:
 
 {
+  imports =
+    [ # Include the results of the hardware scan.
+      ./host
+      ./services
+    ];
+
   config = {
     lab = {
       all_hosts = [
@@ -28,12 +34,6 @@
       current_host = builtins.filter (x: x.name == config.host.name) config.lab.all_hosts;
       other_hosts = builtins.filter (x: x.name != config.host.name) config.lab.all_hosts;
     };
-
-    imports =
-      [ # Include the results of the hardware scan.
-        ./host
-        ./services
-      ];
 
     # Enable SysRQ key
     boot.kernel.sysctl = {
