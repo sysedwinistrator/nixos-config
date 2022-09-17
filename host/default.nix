@@ -34,6 +34,9 @@ with lib;
     zfs = mkOption {
       type = types.bool;
     };
+    zfsDataSet = mkOption {
+      type = types.str;
+    };
     ssd = mkOption {
       type = types.bool;
     };
