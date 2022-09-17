@@ -40,5 +40,8 @@ in
       # node configuration
       kubelet.kubeconfig.server = lib.mkIf is_node api;
     };
+    systemd.services."etcd".environment = lib.mkIf is_master {
+      ETCD_UNSUPPORTED_ARCH = "arm64";
+    };
   };
 }
