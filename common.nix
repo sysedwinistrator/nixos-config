@@ -31,7 +31,7 @@
         }
       ];
         
-      current_host = builtins.filter (x: x.name == config.host.name) config.lab.all_hosts;
+      current_host = builtins.elemAt (builtins.filter (x: x.name == config.host.name) config.lab.all_hosts) 0;
       other_hosts = builtins.filter (x: x.name != config.host.name) config.lab.all_hosts;
     };
 
