@@ -9,7 +9,7 @@ in
 {
   config = lib.mkIf (is_master || is_node) {
     fileSystems = lib.mkIf config.host.zfs {
-      "/var/lib/containerd" = {
+      "/var/lib/containerd/io.containerd.snapshotter.v1.zfs" = {
         device = "${config.host.zfsDataSet}/containerd";
         fsType = "zfs";
         options = [ "zfsutils" ];
