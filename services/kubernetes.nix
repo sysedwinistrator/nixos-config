@@ -5,11 +5,11 @@ let
   api = "https://${master.ip}:${builtins.toString config.services.kubernetes.apiserver.securePort}";
   is_master = builtins.elem "master" config.lab.current_host.kubernetes_roles;
   is_node = builtins.elem "node" config.lab.current_host.kubernetes_roles;
-  fromYAML = yaml:
+  fromYAML = yamlFile:
   builtins.fromJSON (builtins.readFile (pkgs.stdenv.mkDerivation {
       name = "fromYAML";
       phases = [ "buildPhase" ];
-      buildPhase = "${pkgs.yaml2json}/bin/yaml2json < ${builtins.toFile "yaml" yaml} > $out";
+      buildPhase = "${pkgs.yaml2json}/bin/yaml2json < ${yamlFile} > $out";
   }));
   kuberouter_manifests_src = builtins.readFile(builtins.fetchurl "https://github.com/cloudnativelabs/kube-router/blob/v1.5.1/daemonset/generic-kuberouter-all-features-advertise-routes.yaml");
   kuberouter_manifests_templated = pkgs.substituteAll { src = kuberouter_manifests_src; "%CLUSTERCIDR%" = config.services.kubernetes.clusterCidr; "%APISERVER%" = api; };
