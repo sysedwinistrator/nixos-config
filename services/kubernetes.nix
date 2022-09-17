@@ -26,7 +26,7 @@ in
       easyCerts = true;
       addons.dns.enable = true;
 
-      roles = config.current_host.kubernetes_roles;
+      roles = config.lab.current_host.kubernetes_roles;
       masterAddress = master.ip;
       apiserverAddress = api;
 
