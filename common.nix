@@ -100,15 +100,15 @@
     # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
     system.stateVersion = "22.05"; # Did you read the comment?
   };
-  options = {
-    lab.all_hosts = lib.mkOption {
+  options.lab = {
+    all_hosts = lib.mkOption {
       type = with lib.types; listOf attrs;
       default = [];
     };
-    lab.current_host = lib.mkOption {
+    current_host = lib.mkOption {
       type = with lib.types; attrs;
     };
-    lab.other_hosts = lib.mkOption {
+    other_hosts = lib.mkOption {
       type = with lib.types; listOf attrs;
     };
   };
