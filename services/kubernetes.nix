@@ -6,11 +6,11 @@ let
   is_master = builtins.elem "master" config.lab.current_host.kubernetes_roles;
   is_node = builtins.elem "node" config.lab.current_host.kubernetes_roles;
   fromYAML = yaml:
-    builtins.fromJSON (builtins.readFile (pkgs.stdenv.mkDerivation {
+  builtins.fromJSON (builtins.readFile (pkgs.stdenv.mkDerivation {
       name = "fromYAML";
       phases = [ "buildPhase" ];
-      buildPhase = "echo '${yaml}' | ${pkgs.yaml2json}/bin/yaml2json > $out";
-    }));
+      buildPhase = "${pkgs.yaml2json}/bin/yaml2json < ${builtins.toFile "yaml" yaml} > $out";
+  }));
   kuberouter_manifests_src = builtins.fetchurl "https://github.com/cloudnativelabs/kube-router/blob/v1.5.1/daemonset/generic-kuberouter-all-features-advertise-routes.yaml";
   kuberouter_manifests_templated = pkgs.substituteAll { src = kuberouter_manifests_src; "%CLUSTERCIDR%" = config.services.kubernetes.clusterCidr; "%APISERVER%" = api; };
   kuberouter_manifests_rendered = fromYAML kuberouter_manifests_templated;
