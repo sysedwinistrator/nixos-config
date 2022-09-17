@@ -2,30 +2,32 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   config = {
-    all_hosts = [
-      {
-        name = "aristotle";
-        ip = "192.168.3.6";
-        kubernetes_roles = ["node"];
-      }
-      {
-        name = "socrates";
-        ip = "192.168.3.7";
-        kubernetes_roles = ["master" "node"];
-      }
-      {
-        name = "plato";
-        ip = "192.168.3.8";
-        kubernetes_roles = ["node"];
-      }
-    ];
-      
-    current_host = builtins.filter (x: x.name == config.host.name) config.all_hosts;
-    other_hosts = builtins.filter (x: x.name != config.host.name) config.all_hosts;
+    lab = {
+      all_hosts = [
+        {
+          name = "aristotle";
+          ip = "192.168.3.6";
+          kubernetes_roles = ["node"];
+        }
+        {
+          name = "socrates";
+          ip = "192.168.3.7";
+          kubernetes_roles = ["master" "node"];
+        }
+        {
+          name = "plato";
+          ip = "192.168.3.8";
+          kubernetes_roles = ["node"];
+        }
+      ];
+        
+      current_host = builtins.filter (x: x.name == config.host.name) config.lab.all_hosts;
+      other_hosts = builtins.filter (x: x.name != config.host.name) config.lab.all_hosts;
+    };
 
     imports =
       [ # Include the results of the hardware scan.
@@ -79,7 +81,7 @@
     nix.settings = {
       substituters = 
       (let
-        ips = builtins.catAttrs "ip" config.other_hosts;
+        ips = builtins.catAttrs "ip" config.lab.other_hosts;
       in
         builtins.map (x: "http://${x}:5000/") ips
       );
@@ -97,6 +99,18 @@
     # Before changing this value read the documentation for this option
     # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
     system.stateVersion = "22.05"; # Did you read the comment?
+  };
+  options = {
+    lab.all_hosts = lib.mkOption {
+      type = with lib.types; listOf attrs;
+      default = [];
+    };
+    lab.current_host = lib.mkOption {
+      type = with lib.types; attrs;
+    };
+    lab.other_hosts = lib.mkOption {
+      type = with lib.types; listOf attrs;
+    };
   };
 }
 
