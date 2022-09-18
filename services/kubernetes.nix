@@ -15,7 +15,7 @@ let
           preferLocalBuild = true;
         }
         ''
-          ${pkgs.yj}/bin/yj -yj < "${yamlFile}" > "$out"
+          ${pkgs.yq}/bin/yq < "${yamlFile}" > "$out"
         ''
     )
   );
