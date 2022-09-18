@@ -1,17 +1,18 @@
-{ config, lib, pkgs, ...}:
-
-with lib;
-
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+with lib; {
   config = lib.mkIf config.host.cgit.enable {
     services.lighttpd = {
       enable = true;
       cgit = {
         enable = true;
-        configText =
-          ''
-            scan-path=${config.host.cgit.scanpath}
-          '';
+        configText = ''
+          scan-path=${config.host.cgit.scanpath}
+        '';
       };
     };
     users.users.git = {

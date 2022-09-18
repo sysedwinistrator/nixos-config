@@ -1,15 +1,17 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ config, lib, pkgs, ... }:
-
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./host
-      ./services
-    ];
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
+  imports = [
+    # Include the results of the hardware scan.
+    ./host
+    ./services
+  ];
 
   config = {
     lab = {
@@ -30,7 +32,7 @@
           kubernetes_roles = ["node"];
         }
       ];
-        
+
       current_host = builtins.elemAt (builtins.filter (x: x.name == config.host.name) config.lab.all_hosts) 0;
       other_hosts = builtins.filter (x: x.name != config.host.name) config.lab.all_hosts;
     };
@@ -79,11 +81,11 @@
       secretKeyFile = "/etc/nixos/secrets/cache-priv-key.pem";
     };
     nix.settings = {
-      substituters = 
-      (let
-        ips = builtins.catAttrs "ip" config.lab.other_hosts;
-      in
-        builtins.map (x: "http://${x}:5000/") ips
+      substituters = (
+        let
+          ips = builtins.catAttrs "ip" config.lab.other_hosts;
+        in
+          builtins.map (x: "http://${x}:5000/") ips
       );
       trusted-public-keys = [
         (builtins.readFile /etc/nixos/cache-pub-key.pem)
@@ -113,4 +115,3 @@
     };
   };
 }
-

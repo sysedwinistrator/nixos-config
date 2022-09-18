@@ -1,15 +1,19 @@
-{ config, lib, pkgs, ...}:
-
-let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   master = builtins.elemAt (builtins.filter (x: builtins.elem "master" x.kubernetes_roles) config.lab.all_hosts) 0;
   api = "https://${master.ip}:${builtins.toString config.services.kubernetes.apiserver.securePort}";
   is_master = builtins.elem "master" config.lab.current_host.kubernetes_roles;
   is_node = builtins.elem "node" config.lab.current_host.kubernetes_roles;
   fromYAMLString = yamlString: (fromYAML (builtins.toFile "from-yaml-string" yamlString));
 
-  fromYAML = yamlFile: builtins.fromJSON (
-    builtins.readFile (
-      pkgs.runCommandNoCC "from-yaml"
+  fromYAML = yamlFile:
+    builtins.fromJSON (
+      builtins.readFile (
+        pkgs.runCommandNoCC "from-yaml"
         {
           allowSubstitutes = false;
           preferLocalBuild = true;
@@ -17,26 +21,25 @@ let
         ''
           ${pkgs.yq}/bin/yq < "${yamlFile}" > "$out"
         ''
-    )
-  );
+      )
+    );
   kuberouter_manifests_src = builtins.fetchurl "https://raw.githubusercontent.com/cloudnativelabs/kube-router/v1.5.1/daemonset/generic-kuberouter-all-features-advertise-routes.yaml";
   kuberouter_manifests_templated = pkgs.runCommand "kuberouter.yaml" {} ''
-  sed -e "s;%APISERVER%;${api};g" -e "s;%CLUSTERCIDR%;${config.services.kubernetes.clusterCidr} ${kuberouter_manifests_src} > $out 
+    sed -e "s;%APISERVER%;${api};g" -e "s;%CLUSTERCIDR%;${config.services.kubernetes.clusterCidr} ${kuberouter_manifests_src} > $out
   '';
   kuberouter_manifests_rendered = fromYAML kuberouter_manifests_templated;
-in
-{
+in {
   config = lib.mkIf (is_master || is_node) {
     fileSystems = lib.mkIf config.host.zfs {
       "/var/lib/containerd/io.containerd.snapshotter.v1.zfs" = {
         device = "${config.host.zfsDataSet}/containerd";
         fsType = "zfs";
-        options = [ "zfsutils" ];
+        options = ["zfsutils"];
       };
       "/var/lib/etcd" = lib.mkIf is_master {
         device = "${config.host.zfsDataSet}/etcd";
         fsType = "zfs";
-        options = [ "zfsutils" ];
+        options = ["zfsutils"];
       };
     };
     services.kubernetes = {
