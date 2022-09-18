@@ -65,7 +65,7 @@ in {
 
       addonManager = {
         enable = true;
-        addons = {"kuberouter" = kuberouter_manifests_final;};
+        addons = kuberouter_manifests_final;
       };
     };
     systemd.services."etcd".environment = lib.mkIf is_master {
