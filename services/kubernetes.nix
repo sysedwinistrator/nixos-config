@@ -19,7 +19,7 @@ let
         ''
     )
   );
-  kuberouter_manifests_src = builtins.fetchurl "https://github.com/cloudnativelabs/kube-router/blob/v1.5.1/daemonset/generic-kuberouter-all-features-advertise-routes.yaml";
+  kuberouter_manifests_src = builtins.fetchurl "https://raw.githubusercontent.com/cloudnativelabs/kube-router/v1.5.1/daemonset/generic-kuberouter-all-features-advertise-routes.yaml";
   kuberouter_manifests_templated = pkgs.substituteAll { src = kuberouter_manifests_src; "%CLUSTERCIDR%" = config.services.kubernetes.clusterCidr; "%APISERVER%" = api; };
   kuberouter_manifests_rendered = fromYAML kuberouter_manifests_templated;
 in
