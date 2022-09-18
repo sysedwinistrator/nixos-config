@@ -28,7 +28,11 @@
     sed ${kuberouter_manifests_src} -e "s;%APISERVER%;${api};g" -e "s;%CLUSTERCIDR%;${config.services.kubernetes.clusterCidr};g" > $out
   '';
   kuberouter_manifests_rendered = fromYAML kuberouter_manifests_templated;
-  kuberouter_manifests_final = builtins.listToAttrs (builtins.map (resource: { name = "${resource.kind}-${resource.metadata.name}"; value = resource; } ) kuberouter_manifests_rendered); 
+  kuberouter_manifests_final = builtins.listToAttrs (builtins.map (resource: {
+      name = "${resource.kind}-${resource.metadata.name}";
+      value = resource;
+    })
+    kuberouter_manifests_rendered);
 in {
   config = lib.mkIf (is_master || is_node) {
     fileSystems = lib.mkIf config.host.zfs {
@@ -63,13 +67,18 @@ in {
       # node configuration
       kubelet.kubeconfig.server = lib.mkIf is_node api;
 
-      addonManager = {
+      addonManager = lib.mkIf is_master {
         enable = true;
-        addons = kuberouter_manifests_final;
+        bootstrapAddons = kuberouter_manifests_final;
       };
     };
-    systemd.services."etcd".environment = lib.mkIf is_master {
-      ETCD_UNSUPPORTED_ARCH = "arm64";
+    systemd.services = {
+      etcd.environment = lib.mkIf is_master {
+        ETCD_UNSUPPORTED_ARCH = "arm64";
+      };
+      kube-addon-manager.serviceConfig = lib.mkIf is_master {
+        User = "root";
+      };
     };
   };
 }
