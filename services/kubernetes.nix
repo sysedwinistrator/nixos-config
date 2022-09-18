@@ -70,15 +70,11 @@ in {
       addonManager = lib.mkIf is_master {
         enable = true;
         bootstrapAddons = kuberouter_manifests_final;
+        user = "root";
       };
     };
-    systemd.services = {
-      etcd.environment = lib.mkIf is_master {
-        ETCD_UNSUPPORTED_ARCH = "arm64";
-      };
-      kube-addon-manager.serviceConfig = lib.mkIf is_master {
-        User = "root";
-      };
+    systemd.services.etcd.environment = lib.mkIf is_master {
+      ETCD_UNSUPPORTED_ARCH = "arm64";
     };
   };
 }
