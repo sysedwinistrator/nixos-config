@@ -28,6 +28,7 @@
     sed ${kuberouter_manifests_src} -e "s;%APISERVER%;${api};g" -e "s;%CLUSTERCIDR%;${config.services.kubernetes.clusterCidr};g" > $out
   '';
   kuberouter_manifests_rendered = fromYAML kuberouter_manifests_templated;
+  kuberouter_manifests_final = builtins.listToAttrs (builtins.map (resource: { name = "${resource.kind}-${resource.metadata.name}"; value = resource; } ) kuberouter_manifests_rendered); 
 in {
   config = lib.mkIf (is_master || is_node) {
     fileSystems = lib.mkIf config.host.zfs {
@@ -64,7 +65,7 @@ in {
 
       addonManager = {
         enable = true;
-        addons = {"kuberouter" = kuberouter_manifests_rendered;};
+        addons = {"kuberouter" = kuberouter_manifests_final;};
       };
     };
     systemd.services."etcd".environment = lib.mkIf is_master {
